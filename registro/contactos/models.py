@@ -24,8 +24,8 @@ class Direccion(models.Model):
 class Contacto(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
-    telefono =  PhoneNumberField(null=True, unique=True)
-    telefono =  PhoneNumberField(null=True, unique=True)
+    celular =  models.PositiveIntegerField(null=True, unique=True)
+    telefono =  models.PositiveIntegerField(null=True, unique=True)
     direccion = models.ForeignKey(
         'Direccion',on_delete=models.CASCADE, blank=True, null=True)
     fecha = models.DateField("Fecha", null=True, blank=True, help_text="Fecha en que recibio")
@@ -37,7 +37,7 @@ class Contacto(models.Model):
     ESTADOS = ((COMPLETADO,'Completado'),(PROCESO,'En proceso'))
     estado = models.CharField(max_length=2, choices=ESTADOS, default=PROCESO)
 
-    orden  = models.PositiveIntegerField(help_text="Numero de Orden", blank=True)
+    orden  = models.PositiveIntegerField(help_text="Numero de Orden", blank=True, null=True)
 
     medio = models.ForeignKey('Medio', on_delete=models.SET_NULL, null=True)
     categoria = models.ForeignKey('Categoria', on_delete=models.SET_NULL, null=True)
@@ -45,4 +45,4 @@ class Contacto(models.Model):
 
 
     def __str__(self):
-        return self.nombre
+        return '{0} {1}'.format(self.nombre, self.apellido)
